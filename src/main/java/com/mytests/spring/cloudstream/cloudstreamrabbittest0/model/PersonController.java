@@ -32,14 +32,14 @@ public class PersonController {
         return "redirect:/result";
     }*/
 
-   /* @GetMapping("/result")
+    @GetMapping("/result")
     @StreamListener(value = "personInput")
     @SendTo("personOutput")
     public String listen(Person person) {
         return person.toString();
-    }*/
+    }
 
-    @GetMapping("/result")
+    /*@GetMapping("/result")
     @StreamListener(target = "personInput", condition = "payload.getAge()>45")
     public void listen2(Person person) {
         System.out.println("***************************");
@@ -49,5 +49,5 @@ public class PersonController {
         return MessageBuilder.withPayload(val).build();
     }
 
-    // TODO: payload is not resolved, the method return type is not checked to be void if condition is specified
+   */ // TODO: payload is not resolved, the method return type is not checked to be void if condition is specified
 }
