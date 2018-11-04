@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.messaging.support.MessageBuilder;
@@ -39,7 +40,7 @@ public class PersonController {
         return person.toString();
     }
 
-    /*@GetMapping("/result")
+    @GetMapping("/result")
     @StreamListener(target = "personInput", condition = "payload.getAge()>45")
     public void listen2(Person person) {
         System.out.println("***************************");
@@ -49,5 +50,16 @@ public class PersonController {
         return MessageBuilder.withPayload(val).build();
     }
 
-   */ // TODO: payload is not resolved, the method return type is not checked to be void if condition is specified
+    @GetMapping("/result")
+    @StreamListener(target = "personInput", condition = "headers['type']=''")
+    public void listen3(@Payload(expression = "") Person person) {
+        System.out.println("***************************");
+      myPersonService.anotherPersonOutput().send(message(person));
+    }
+
+
+
+
+
+    // TODO: payload is not resolved
 }
